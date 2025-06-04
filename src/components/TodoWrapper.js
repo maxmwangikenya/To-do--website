@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import TodoForm from './TodoForm';
-import Todo from './Todo'; // This component should render a single todo item
+import Todo from './Todo';
 import { v4 as uuidv4 } from 'uuid';
 
 const TodoWrapper = () => {
@@ -18,13 +18,24 @@ const TodoWrapper = () => {
     ]);
   };
 
+  const toggleComplete = (id) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      )
+    );
+  };
+
   return (
     <div className="TodoWrapper">
       <TodoForm addTodo={addTodo} />
-
-      {/* Render a list of Todo components */}
       {todos.map((todo) => (
-        <Todo key={todo.id} task={todo.task} id={todo.id} />
+        <Todo
+          key={todo.id}
+          task={todo.task}
+          id={todo.id}
+          toggleComplete={toggleComplete}
+        />
       ))}
     </div>
   );
